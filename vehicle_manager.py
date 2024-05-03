@@ -30,7 +30,7 @@ class VehicleManager:
         vehicles = [Vehicle(**vehicle) for vehicle in response.json()]
         return vehicles
 
-    def get_vehicle(self, vehicle_id: Any) -> Vehicle:
+    def get_vehicle(self, vehicle_id: int) -> Vehicle:
         """Fetches a specific vehicle by vehicle ID."""
         response = requests.get(f"{self.url}/vehicles/{vehicle_id}")
         vehicle_data = response.json()
@@ -51,7 +51,7 @@ class VehicleManager:
         response = requests.put(f"{self.url}/vehicles/{vehicle.id}", json=vars(vehicle))
         return Vehicle(**response.json())
 
-    def delete_vehicle(self, id: Any) -> int:
+    def delete_vehicle(self, id: int) -> int:
         """Deletes a vehicle by its ID."""
         response = requests.delete(f"{self.url}/vehicles/{id}")
         return response.status_code
@@ -65,7 +65,7 @@ class VehicleManager:
         ]
         return filtered_vehicles
 
-    def get_distance(self, id1: Any, id2: Any) -> float:
+    def get_distance(self, id1: int, id2: int) -> float:
         """Calculates the distance in meters between two vehicles using their coordinates."""
         vehicle1 = self.get_vehicle(id1)
         vehicle2 = self.get_vehicle(id2)
@@ -78,7 +78,7 @@ class VehicleManager:
         distance = 6371000 * c  # Earth's radius in meters
         return distance
 
-    def get_nearest_vehicle(self, id: Any) -> Vehicle:
+    def get_nearest_vehicle(self, id: int) -> Vehicle:
         """Finds the nearest vehicle to a given vehicle identified by ID."""
         target_vehicle = self.get_vehicle(id)
         all_vehicles = self.get_vehicles()
